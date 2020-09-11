@@ -30,6 +30,7 @@ while switch:
         if (int_video != count):
             print(vidcount)
             message1 = twillio_client.messages.create(body="FaZe Rug new video OUT!!!", from_="whatsapp:+14155238886", to="whatsapp:+60176106169")
+            print("New video is OUT!!")
             print("SMS sent!!")
             count=count +1
         else:
