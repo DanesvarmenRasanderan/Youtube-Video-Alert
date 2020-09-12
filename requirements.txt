@@ -15,7 +15,6 @@ googleapis-common-protos==1.52.0
 httplib2==0.18.1
 idna==2.9
 imageio==2.1.2
-InstagramAPI==1.0.2
 isort==4.3.21
 jedi==0.15.2
 kiwisolver==1.2.0
@@ -27,7 +26,6 @@ oauthlib==3.1.0
 pandas==1.1.0
 Pillow==7.1.2
 pyasn1-modules==0.2.8
-PyAudio==0.2.11
 PyAutoGUI==0.9.50
 pycodestyle==2.5.0
 pydocstyle==5.0.2
