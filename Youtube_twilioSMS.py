@@ -23,7 +23,6 @@ request = youtube.channels().list(
 count = 14
 while switch:
     response = request.execute()
-    print(response)
     for item in response['items']:
         vidcount = item['statistics']['videoCount']
         int_video = int(vidcount)
