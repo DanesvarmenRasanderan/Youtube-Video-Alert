@@ -73,7 +73,7 @@ def main():
                     channel["channelcount"][channelindex[i]] = str(channel["channelcount"][channelindex[i]]) # int to str
 
             i = i+1
-            time.sleep(2) # wait 10 seconds
+            time.sleep(3) # wait 10 seconds
 
         else:
             i=0 # make i = 0 -restart loop
