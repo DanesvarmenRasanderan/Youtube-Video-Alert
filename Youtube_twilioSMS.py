@@ -16,7 +16,8 @@ youtube = build("youtube", "v3", developerKey=api_key)
 channelindex = ("fazerug", "sidemen", "sidemenreacts", "brawadis", "jj olatunji" )
 channel = {"channelID" : { "sidemen" : "UCDogdKl7t7NHzQ95aEwkdMw" , "sidemenreacts" : "UCjRkTl_HP4zOh3UFaThgRZw" , "brawadis" : "UCvtRTOMP2TqYqu51xNrqAzg" },
         "channelUsername" : { "fazerug" : "oRugrat" , "jj olatunji" : "KSIOlajidebtHD"},
-        "channelcount" : { "fazerug" : "1667" , "sidemen" : "165" , "sidemenreacts" : "16" , "brawadis" : "1509" , "jj olatunji" : "1017"}
+        "channelcount" : { "fazerug" : "1683" , "sidemen" : "170" , "sidemenreacts" : "32" , "brawadis" : "1527" , "jj olatunji" : "1030"},
+        "playlistcode" : {"fazerug" : "UUilwZiBBfI9X6yiZRzWty8Q" , "sidemen" : "UUDogdKl7t7NHzQ95aEwkdMw" , "sidemenreacts" : "UUjRkTl_HP4zOh3UFaThgRZw" , "brawadis" : "UUvtRTOMP2TqYqu51xNrqAzg" , "jj olatunji" : "UUGmnsW623G1r-Chmo5RB4Yw"}
         }
 
 def stat_request():
@@ -46,6 +47,7 @@ def main():
                     forUsername=channel["channelUsername"][channelindex[i]],
                     )
                 response = request_username.execute()
+                print(response)  #test run
 
             elif channelindex[i] in channel["channelID"]:
                 requestID = youtube.channels().list(
@@ -57,6 +59,9 @@ def main():
             else:
                 print("NO channel ID found")
 
+            uploadplaylist = channel["playlistcode"][channelindex[i]] # -- get youtube upload playlist code
+            print(uploadplaylist)
+
             for item in response['items']:
                 vidcount = item['statistics']['videoCount']
 
@@ -66,8 +71,23 @@ def main():
                     sms = ("New video in *%s* !!!" % channelindex[i])
                     print(sms)
                     print(vidcount)
+
+                    requestcode = youtube.playlistItems().list(
+                            part="contentDetails",
+                            playlistId=uploadplaylist,
+                            maxResults=1,
+                            ).execute() # -- get youtube video url code
+
+                    for item in requestcode["items"]:
+                        videocode = item["contentDetails"]["videoId"]
+
+                    url = "https://www.youtube.com/watch?v={}".format(videocode)
+                    print(url) 
                     message1 = twillio_client.messages.create(body=sms, from_="whatsapp:+14155238886", to="whatsapp:+60176106169") # send alert via whatsapp
+                    message2 = twillio_client.messages.create(body=url, from_="whatsapp:+14155238886", to="whatsapp:+60176106169") # send video url via whatsapp
+
                     print("Alert send!")
+
                     channel["channelcount"][channelindex[i]] = int(channel["channelcount"][channelindex[i]]) # str to int
                     channel["channelcount"][channelindex[i]] =(channel["channelcount"][channelindex[i]]) + 1
                     channel["channelcount"][channelindex[i]] = str(channel["channelcount"][channelindex[i]]) # int to str
