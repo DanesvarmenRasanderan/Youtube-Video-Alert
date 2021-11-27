@@ -57,6 +57,6 @@ soupsieve==2.0
 torrequest==0.1.0
 tqdm==4.11.2
 twilio==6.41.0
-urllib3==1.25.9
+urllib3==1.26.5
 
 
